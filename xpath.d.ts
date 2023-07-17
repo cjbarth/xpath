@@ -38,14 +38,14 @@ export function selectWithResolver(expression: string, node: Node, resolver: XPa
 export function useNamespaces(namespaceMap: Record<string, string>): XPathSelect;
 
 // Type guards to narrow down the type of the selected type of a returned Node object
-export function isNodeLike(value: SelectedValue): value is Node;
-export function isArrayOfNodes(value: SelectedValue): value is Node[];
-export function isElement(value: SelectedValue): value is Element;
-export function isAttribute(value: SelectedValue): value is Attr;
-export function isTextNode(value: SelectedValue): value is Text;
-export function isCDATASection(value: SelectedValue): value is CDATASection;
-export function isProcessingInstruction(value: SelectedValue): value is ProcessingInstruction;
-export function isComment(value: SelectedValue): value is Comment;
-export function isDocumentNode(value: SelectedValue): value is Document;
-export function isDocumentTypeNode(value: SelectedValue): value is DocumentType;
-export function isDocumentFragment(value: SelectedValue): value is DocumentFragment;
+export function isNodeLike(value: SelectReturnType): value is Node;
+export function isArrayOfNodes(value: SelectReturnType): value is Node[];
+export function isElement(value: SelectReturnType): value is Element;
+export function isAttribute(value: SelectReturnType): value is Attr;
+export function isTextNode(value: SelectReturnType): value is Text;
+export function isCDATASection(value: SelectReturnType): value is CDATASection;
+export function isProcessingInstruction(value: SelectReturnType): value is ProcessingInstruction;
+export function isComment(value: SelectReturnType): value is Comment;
+export function isDocumentNode(value: SelectReturnType): value is Document;
+export function isDocumentTypeNode(value: SelectReturnType): value is DocumentType;
+export function isDocumentFragment(value: SelectReturnType): value is DocumentFragment;
