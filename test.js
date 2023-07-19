@@ -1058,8 +1058,8 @@ describe('xpath', () => {
             var element = doc.createElement('characters');
 
             assert.ok(xpath.isNodeLike(element));
-            assert.ok(xpath.isElement(element));
-            assert.ok(!xpath.isAttribute(doc));
+            assert.ok(xpath.isElementNode(element));
+            assert.ok(!xpath.isAttributeNode(doc));
         });
 
         it('should correctly identify a Node of type Attribute', () => {
@@ -1067,7 +1067,7 @@ describe('xpath', () => {
             var attribute = doc.createAttribute('name');
 
             assert.ok(xpath.isNodeLike(attribute));
-            assert.ok(xpath.isAttribute(attribute));
+            assert.ok(xpath.isAttributeNode(attribute));
             assert.ok(!xpath.isTextNode(attribute));
         });
 
@@ -1077,7 +1077,7 @@ describe('xpath', () => {
 
             assert.ok(xpath.isNodeLike(text));
             assert.ok(xpath.isTextNode(text));
-            assert.ok(!xpath.isCDATASection(text));
+            assert.ok(!xpath.isCDATASectionNode(text));
         });
 
         it('should correctly identify a Node of type CDATASection', () => {
@@ -1085,18 +1085,17 @@ describe('xpath', () => {
             var cdata = doc.createCDATASection('Harry Potter');
 
             assert.ok(xpath.isNodeLike(cdata));
-            assert.ok(xpath.isCDATASection(cdata));
-            assert.ok(!xpath.isProcessingInstruction(cdata));
+            assert.ok(xpath.isCDATASectionNode(cdata));
+            assert.ok(!xpath.isProcessingInstructionNode(cdata));
         });
 
         it('should correctly identify a Node of type ProcessingInstruction', () => {
             var doc = parseXml('<book />');
             var pi = doc.createProcessingInstruction('xml-stylesheet', 'href="mycss.css" type="text/css"');
 
-            // This test fails due to a bug in @xmldom/xmldom@0.8.8
-            // assert.ok(xpath.isNodeLike(pi));
-            assert.ok(xpath.isProcessingInstruction(pi));
-            assert.ok(!xpath.isComment(pi));
+            assert.ok(xpath.isNodeLike(pi));
+            assert.ok(xpath.isProcessingInstructionNode(pi));
+            assert.ok(!xpath.isCommentNode(pi));
         });
 
         it('should correctly identify a Node of type Comment', () => {
@@ -1104,7 +1103,7 @@ describe('xpath', () => {
             var comment = doc.createComment('Harry Potter');
 
             assert.ok(xpath.isNodeLike(comment));
-            assert.ok(xpath.isComment(comment));
+            assert.ok(xpath.isCommentNode(comment));
             assert.ok(!xpath.isDocumentNode(comment));
         });
 
@@ -1122,7 +1121,7 @@ describe('xpath', () => {
 
             assert.ok(xpath.isNodeLike(doctype));
             assert.ok(xpath.isDocumentTypeNode(doctype));
-            assert.ok(!xpath.isDocumentFragment(doctype));
+            assert.ok(!xpath.isDocumentFragmentNode(doctype));
         });
 
         it('should correctly identify a Node of type DocumentFragment', () => {
@@ -1130,8 +1129,8 @@ describe('xpath', () => {
             var fragment = doc.createDocumentFragment();
 
             assert.ok(xpath.isNodeLike(fragment));
-            assert.ok(xpath.isDocumentFragment(fragment));
-            assert.ok(!xpath.isElement(fragment));
+            assert.ok(xpath.isDocumentFragmentNode(fragment));
+            assert.ok(!xpath.isElementNode(fragment));
         });
 
         it('should not identify a string as a Node', () => {

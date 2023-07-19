@@ -3099,8 +3099,8 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
             n2Par = n2.parentNode || n2.ownerElement;
         }
 
-        var n1isAttr = Utilities.isAttribute(n1);
-        var n2isAttr = Utilities.isAttribute(n2);
+        var n1isAttr = Utilities.isAttributeNode(n1);
+        var n2isAttr = Utilities.isAttributeNode(n2);
 
         if (n1isAttr && !n2isAttr) {
             return -1;
@@ -3912,9 +3912,36 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
 
     var Utilities = new Object();
 
-    Utilities.isAttribute = function (val) {
-        return val && (val.nodeType === NodeTypes.ATTRIBUTE_NODE || val.ownerElement);
-    }
+    Utilities.isNodeLike = function (value) {
+        return value 
+            && typeof value.nodeType === "number" 
+            && Number.isInteger(value.nodeType)
+            && value.nodeType >= 1
+            && value.nodeType <= 11
+            && typeof value.nodeName === "string"
+            && typeof value.appendChild === "function"
+            && typeof value.removeChild === "function";
+    };
+
+    Utilities.isArrayOfNodes = function (value) {
+        return Array.isArray(value) && value.every(Utilities.isNodeLike);
+    };
+
+    Utilities.isNodeOfType = function (type) {
+        return function (value) {
+            return Utilities.isNodeLike(value) && value.nodeType === type;
+        };
+    };
+
+    Utilities.isElementNode = Utilities.isNodeOfType(NodeTypes.ELEMENT_NODE),
+    Utilities.isAttributeNode = Utilities.isNodeOfType(NodeTypes.ATTRIBUTE_NODE),
+    Utilities.isTextNode = Utilities.isNodeOfType(NodeTypes.TEXT_NODE),
+    Utilities.isCDATASectionNode = Utilities.isNodeOfType(NodeTypes.CDATA_SECTION_NODE),
+    Utilities.isProcessingInstructionNode = Utilities.isNodeOfType(NodeTypes.PROCESSING_INSTRUCTION_NODE),
+    Utilities.isCommentNode = Utilities.isNodeOfType(NodeTypes.COMMENT_NODE),
+    Utilities.isDocumentNode = Utilities.isNodeOfType(NodeTypes.DOCUMENT_NODE),
+    Utilities.isDocumentTypeNode = Utilities.isNodeOfType(NodeTypes.DOCUMENT_TYPE_NODE),
+    Utilities.isDocumentFragmentNode = Utilities.isNodeOfType(NodeTypes.DOCUMENT_FRAGMENT_NODE),
 
     Utilities.splitQName = function (qn) {
         var i = qn.indexOf(":");
@@ -4899,39 +4926,20 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
         return exports.select(e, doc, true);
     };
 
-    var isNodeLike = function (value) {
-        return value 
-            && typeof value.nodeType === "number" 
-            && Number.isInteger(value.nodeType)
-            && value.nodeType >= 1
-            && value.nodeType <= 11
-            && typeof value.nodeName === "string";
-    };
-
-    var isArrayOfNodes = function (value) {
-        return Array.isArray(value) && value.every(isNodeLike);
-    };
-
-    var isNodeOfType = function (type) {
-        return function (value) {
-            return isNodeLike(value) && value.nodeType === type;
-        };
-    };
-
     assign(
         exports,
         {
-            isNodeLike: isNodeLike,
-            isArrayOfNodes: isArrayOfNodes,
-            isElement: isNodeOfType(NodeTypes.ELEMENT_NODE),
-            isAttribute: isNodeOfType(NodeTypes.ATTRIBUTE_NODE),
-            isTextNode: isNodeOfType(NodeTypes.TEXT_NODE),
-            isCDATASection: isNodeOfType(NodeTypes.CDATA_SECTION_NODE),
-            isProcessingInstruction: isNodeOfType(NodeTypes.PROCESSING_INSTRUCTION_NODE),
-            isComment: isNodeOfType(NodeTypes.COMMENT_NODE),
-            isDocumentNode: isNodeOfType(NodeTypes.DOCUMENT_NODE),
-            isDocumentTypeNode: isNodeOfType(NodeTypes.DOCUMENT_TYPE_NODE),
-            isDocumentFragment: isNodeOfType(NodeTypes.DOCUMENT_FRAGMENT_NODE),
+            isNodeLike: Utilities.isNodeLike,
+            isArrayOfNodes: Utilities.isArrayOfNodes,
+            isElementNode: Utilities.isElementNode,
+            isAttributeNode: Utilities.isAttributeNode,
+            isTextNode: Utilities.isTextNode,
+            isCDATASectionNode: Utilities.isCDATASectionNode,
+            isProcessingInstructionNode: Utilities.isProcessingInstructionNode,
+            isCommentNode: Utilities.isCommentNode,
+            isDocumentNode: Utilities.isDocumentNode,
+            isDocumentTypeNode: Utilities.isDocumentTypeNode,
+            isDocumentFragmentNode: Utilities.isDocumentFragmentNode
         }
     );
     // end non-node wrapper
