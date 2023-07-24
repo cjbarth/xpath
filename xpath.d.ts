@@ -10,7 +10,6 @@ type Nullable<T> = T | null | undefined;
 export interface XPathSelect {
     (expression: Nullable<undefined>, node: Node): [];
     (expression: Nullable<undefined>, node: Node, single: false): [];
-    (expression: Nullable<undefined>, node: Node, single: true): undefined;
     (expression: string, node: Node): SelectReturnType;
     (expression: string, node: Node, single: false): SelectReturnType;
     (expression: string, node: Node, single: true): SelectSingleReturnType;
