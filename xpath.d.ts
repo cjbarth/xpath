@@ -12,7 +12,7 @@ export interface XPathSelect {
     (expression: Nullable<undefined>, node: Node, single: false): [];
     (expression: string, node: Node): SelectReturnType;
     (expression: string, node: Node, single: false): SelectReturnType;
-    (expression: string, node: Node, single: true): SelectSingleReturnType;
+    (expression: Nullable<string>, node: Node, single: true): SelectSingleReturnType;
 }
 
 /**
@@ -22,7 +22,7 @@ export function select(expression: Nullable<undefined>, node: Node): [];
 export function select(expression: Nullable<undefined>, node: Node, single: false): [];
 export function select(expression: string, node: Node): SelectReturnType;
 export function select(expression: string, node: Node, single: false): SelectReturnType;
-export function select(expression: string, node: Node, single: true): SelectSingleReturnType;
+export function select(expression: Nullable<string>, node: Node, single: true): SelectSingleReturnType;
 
 /**
  * Evaluate an xpath expression against a DOM node, returning the first result only.
