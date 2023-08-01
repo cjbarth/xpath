@@ -57,3 +57,15 @@ export function isCommentNode(value: Nullable<SelectSingleReturnType>): value is
 export function isDocumentNode(value: Nullable<SelectSingleReturnType>): value is Document;
 export function isDocumentTypeNode(value: Nullable<SelectSingleReturnType>): value is DocumentType;
 export function isDocumentFragmentNode(value: Nullable<SelectSingleReturnType>): value is DocumentFragment;
+
+export function assertIsNodeLike(value: Nullable<SelectSingleReturnType>): asserts value is Node;
+export function assertIsArrayOfNodes(value: Nullable<SelectReturnType>): asserts value is Node[];
+export function assertIsElement(value: Nullable<SelectSingleReturnType>): asserts value is Element;
+export function assertIsAttribute(value: Nullable<SelectSingleReturnType>): asserts value is Attr;
+export function assertIsTextNode(value: Nullable<SelectSingleReturnType>): asserts value is Text;
+export function assertIsCDATASection(value: Nullable<SelectSingleReturnType>): asserts value is CDATASection;
+export function assertIsProcessingInstruction(value: Nullable<SelectSingleReturnType>): asserts value is ProcessingInstruction;
+export function assertIsComment(value: Nullable<SelectSingleReturnType>): asserts value is Comment;
+export function assertIsDocumentNode(value: Nullable<SelectSingleReturnType>): asserts value is Document;
+export function assertIsDocumentTypeNode(value: Nullable<SelectSingleReturnType>): asserts value is DocumentType;
+export function assertIsDocumentFragment(value: Nullable<SelectSingleReturnType>): asserts value is DocumentFragment;
