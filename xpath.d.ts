@@ -46,26 +46,26 @@ export function selectWithResolver(expression: string, node: Node, resolver: Nul
 export function useNamespaces(namespaceMap: Record<string, string>): XPathSelect;
 
 // Type guards to narrow down the type of the selected type of a returned Node object
-export function isNodeLike(value: Nullable<SelectSingleReturnType>): value is Node;
-export function isArrayOfNodes(value: Nullable<SelectReturnType>): value is Node[];
-export function isElementNode(value: Nullable<SelectSingleReturnType>): value is Element;
-export function isAttributeNode(value: Nullable<SelectSingleReturnType>): value is Attr;
-export function isTextNode(value: Nullable<SelectSingleReturnType>): value is Text;
-export function isCDATASectionNode(value: Nullable<SelectSingleReturnType>): value is CDATASection;
-export function isProcessingInstructionNode(value: Nullable<SelectSingleReturnType>): value is ProcessingInstruction;
-export function isCommentNode(value: Nullable<SelectSingleReturnType>): value is Comment;
-export function isDocumentNode(value: Nullable<SelectSingleReturnType>): value is Document;
-export function isDocumentTypeNode(value: Nullable<SelectSingleReturnType>): value is DocumentType;
-export function isDocumentFragmentNode(value: Nullable<SelectSingleReturnType>): value is DocumentFragment;
+export function isNodeLike(value: unknown): value is Node;
+export function isArrayOfNodes(value: unknown): value is Node[];
+export function isElementNode(value: unknown): value is Element;
+export function isAttributeNode(value: unknown): value is Attr;
+export function isTextNode(value: unknown): value is Text;
+export function isCDATASectionNode(value: unknown): value is CDATASection;
+export function isProcessingInstructionNode(value: unknown): value is ProcessingInstruction;
+export function isCommentNode(value: unknown): value is Comment;
+export function isDocumentNode(value: unknown): value is Document;
+export function isDocumentTypeNode(value: unknown): value is DocumentType;
+export function isDocumentFragmentNode(value: unknown): value is DocumentFragment;
 
-export function assertIsNodeLike(value: Nullable<SelectSingleReturnType>): asserts value is Node;
-export function assertIsArrayOfNodes(value: Nullable<SelectReturnType>): asserts value is Node[];
-export function assertIsElementNode(value: Nullable<SelectSingleReturnType>): asserts value is Element;
-export function assertIsAttributeNode(value: Nullable<SelectSingleReturnType>): asserts value is Attr;
-export function assertIsTextNode(value: Nullable<SelectSingleReturnType>): asserts value is Text;
-export function assertIsCDATASectionNode(value: Nullable<SelectSingleReturnType>): asserts value is CDATASection;
-export function assertIsProcessingInstructionNode(value: Nullable<SelectSingleReturnType>): asserts value is ProcessingInstruction;
-export function assertIsCommentNode(value: Nullable<SelectSingleReturnType>): asserts value is Comment;
-export function assertIsDocumentNode(value: Nullable<SelectSingleReturnType>): asserts value is Document;
-export function assertIsDocumentTypeNode(value: Nullable<SelectSingleReturnType>): asserts value is DocumentType;
-export function assertIsDocumentFragmentNode(value: Nullable<SelectSingleReturnType>): asserts value is DocumentFragment;
+export function assertIsNodeLike(value: unknown): asserts value is Node;
+export function assertIsArrayOfNodes(value: unknown): asserts value is Node[];
+export function assertIsElementNode(value: unknown): asserts value is Element;
+export function assertIsAttributeNode(value: unknown): asserts value is Attr;
+export function assertIsTextNode(value: unknown): asserts value is Text;
+export function assertIsCDATASectionNode(value: unknown): asserts value is CDATASection;
+export function assertIsProcessingInstructionNode(value: unknown): asserts value is ProcessingInstruction;
+export function assertIsCommentNode(value: unknown): asserts value is Comment;
+export function assertIsDocumentNode(value: unknown): asserts value is Document;
+export function assertIsDocumentTypeNode(value: unknown): asserts value is DocumentType;
+export function assertIsDocumentFragmentNode(value: unknown): asserts value is DocumentFragment;

@@ -3914,7 +3914,7 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
 
     Utilities.isNodeLike = function (value) {
         return value 
-            && typeof value.nodeType === "number" 
+            && typeof value === "object"
             && Number.isInteger(value.nodeType)
             && value.nodeType >= 1
             && value.nodeType <= 11
