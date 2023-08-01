@@ -1108,6 +1108,9 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(element));
             assert.ok(xpath.isElementNode(element));
             assert.ok(!xpath.isAttributeNode(doc));
+
+            xpath.assertIsElementNode(element);
+            assert.throws(() => xpath.assertIsAttributeNode(element), /Value is not of type ATTRIBUTE_NODE/);
         });
 
         it('should correctly identify a Node of type Attribute', () => {
@@ -1117,6 +1120,9 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(attribute));
             assert.ok(xpath.isAttributeNode(attribute));
             assert.ok(!xpath.isTextNode(attribute));
+
+            xpath.assertIsAttributeNode(attribute);
+            assert.throws(() => xpath.assertIsTextNode(attribute), /Value is not of type TEXT_NODE/);
         });
 
         it('should correctly identify a Node of type Text', () => {
@@ -1126,6 +1132,9 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(text));
             assert.ok(xpath.isTextNode(text));
             assert.ok(!xpath.isCDATASectionNode(text));
+
+            xpath.assertIsTextNode(text);
+            assert.throws(() => xpath.assertIsCDATASectionNode(text), /Value is not of type CDATA_SECTION_NODE/);
         });
 
         it('should correctly identify a Node of type CDATASection', () => {
@@ -1135,6 +1144,9 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(cdata));
             assert.ok(xpath.isCDATASectionNode(cdata));
             assert.ok(!xpath.isProcessingInstructionNode(cdata));
+
+            xpath.assertIsCDATASectionNode(cdata);
+            assert.throws(() => xpath.assertIsProcessingInstructionNode(cdata), /Value is not of type PROCESSING_INSTRUCTION_NODE/);
         });
 
         it('should correctly identify a Node of type ProcessingInstruction', () => {
@@ -1144,6 +1156,9 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(pi));
             assert.ok(xpath.isProcessingInstructionNode(pi));
             assert.ok(!xpath.isCommentNode(pi));
+
+            xpath.assertIsProcessingInstructionNode(pi);
+            assert.throws(() => xpath.assertIsCommentNode(pi), /Value is not of type COMMENT_NODE/);
         });
 
         it('should correctly identify a Node of type Comment', () => {
@@ -1153,6 +1168,9 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(comment));
             assert.ok(xpath.isCommentNode(comment));
             assert.ok(!xpath.isDocumentNode(comment));
+
+            xpath.assertIsCommentNode(comment);
+            assert.throws(() => xpath.assertIsDocumentNode(comment), /Value is not of type DOCUMENT_NODE/);
         });
 
         it('should correctly identify a Node of type Document', () => {
@@ -1161,15 +1179,21 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(doc));
             assert.ok(xpath.isDocumentNode(doc));
             assert.ok(!xpath.isDocumentTypeNode(doc));
+
+            xpath.assertIsDocumentNode(doc);
+            assert.throws(() => xpath.assertIsDocumentTypeNode(doc), /Value is not of type DOCUMENT_TYPE_NODE/);
         });
 
         it('should correctly identify a Node of type DocumentType', () => {
             var doc = parseXml('<book />');
-            var doctype = doc.implementation.createDocumentType('book', null, null);
+            var docType = doc.implementation.createDocumentType('book', null, null);
 
-            assert.ok(xpath.isNodeLike(doctype));
-            assert.ok(xpath.isDocumentTypeNode(doctype));
-            assert.ok(!xpath.isDocumentFragmentNode(doctype));
+            assert.ok(xpath.isNodeLike(docType));
+            assert.ok(xpath.isDocumentTypeNode(docType));
+            assert.ok(!xpath.isDocumentFragmentNode(docType));
+
+            xpath.assertIsDocumentTypeNode(docType);
+            assert.throws(() => xpath.assertIsDocumentFragmentNode(docType), /Value is not of type DOCUMENT_FRAGMENT_NODE/);
         });
 
         it('should correctly identify a Node of type DocumentFragment', () => {
@@ -1179,30 +1203,45 @@ describe('xpath', () => {
             assert.ok(xpath.isNodeLike(fragment));
             assert.ok(xpath.isDocumentFragmentNode(fragment));
             assert.ok(!xpath.isElementNode(fragment));
+
+            xpath.assertIsDocumentFragmentNode(fragment);
+            assert.throws(() => xpath.assertIsElementNode(fragment), /Value is not of type ELEMENT_NODE/);
         });
 
         it('should not identify a string as a Node', () => {
             assert.ok(!xpath.isNodeLike('Harry Potter'));
+
+            assert.throws(() => xpath.assertIsNodeLike('Harry Potter'), /Value is not a Node-like object/);
         });
 
         it('should not identify a number as a Node', () => {
             assert.ok(!xpath.isNodeLike(45));
+
+            assert.throws(() => xpath.assertIsNodeLike(45), /Value is not a Node-like object/);
         });
 
         it('should not identify a boolean as a Node', () => {
             assert.ok(!xpath.isNodeLike(true));
+
+            assert.throws(() => xpath.assertIsNodeLike(true), /Value is not a Node-like object/);
         });
 
         it('should not identify null as a Node', () => {
             assert.ok(!xpath.isNodeLike(null));
+
+            assert.throws(() => xpath.assertIsNodeLike(null), /Value is not a Node-like object/);
         });
 
         it('should not identify undefined as a Node', () => {
             assert.ok(!xpath.isNodeLike(undefined));
+
+            assert.throws(() => xpath.assertIsNodeLike(undefined), /Value is not a Node-like object/);
         });
 
         it('should not identify an array as a Node', () => {
             assert.ok(!xpath.isNodeLike([]));
+
+            assert.throws(() => xpath.assertIsNodeLike([]), /Value is not a Node-like object/);
         });
 
         it('should identify an array of Nodes as such', () => {
@@ -1212,6 +1251,9 @@ describe('xpath', () => {
 
             assert.ok(xpath.isArrayOfNodes(nodes));
             assert.ok(!xpath.isNodeLike(nodes));
+
+            xpath.assertIsArrayOfNodes(nodes);
+            assert.throws(() => xpath.assertIsNodeLike(nodes), /Value is not a Node-like object/);
         });
 
         it('should not identify an array of non-Nodes as an array of Nodes', () => {
@@ -1219,6 +1261,9 @@ describe('xpath', () => {
 
             assert.ok(!xpath.isArrayOfNodes(nodes));
             assert.ok(!xpath.isNodeLike(nodes));
+
+            assert.throws(() => xpath.assertIsArrayOfNodes(nodes), /Value is not an array of Nodes/);
+            assert.throws(() => xpath.assertIsNodeLike(nodes), /Value is not a Node-like object/);
         });
 
         it('should not identify an array of mixed Nodes and non-Nodes as an array of Nodes', () => {
@@ -1228,6 +1273,9 @@ describe('xpath', () => {
 
             assert.ok(!xpath.isArrayOfNodes(nodes));
             assert.ok(!xpath.isNodeLike(nodes));
+
+            assert.throws(() => xpath.assertIsArrayOfNodes(nodes), /Value is not an array of Nodes/);
+            assert.throws(() => xpath.assertIsNodeLike(nodes), /Value is not a Node-like object/);
         });
     });
 });

@@ -3923,8 +3923,20 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
             && typeof value.removeChild === "function";
     };
 
+    Utilities.assertIsNodeLike = function (value) {
+        if (!Utilities.isNodeLike(value)) {
+            throw new Error("Value is not a Node-like object");
+        }
+    };
+
     Utilities.isArrayOfNodes = function (value) {
         return Array.isArray(value) && value.every(Utilities.isNodeLike);
+    };
+
+    Utilities.assertIsArrayOfNodes = function (value) {
+        if (!Utilities.isArrayOfNodes(value)) {
+            throw new Error("Value is not an array of Nodes");
+        }
     };
 
     Utilities.isNodeOfType = function (type) {
@@ -3933,13 +3945,15 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
         };
     };
 
-    Utilities.assertNodeOfType = function (type) {
+    Utilities.assertIsNodeOfType = function (type) {
         var typeName = Object.keys(NodeTypes).find(key => NodeTypes[key] === type);
         var isOfType = Utilities.isNodeOfType(type);
     
-        if (!isOfType(value)) {
-            throw new Error(`Node is not of type ${typeName}`);
-        }
+        return function (value) {
+            if (!isOfType(value)) {
+                throw new Error(`Value is not of type ${typeName}`);
+            }
+        };
     }
 
     Utilities.isElementNode = Utilities.isNodeOfType(NodeTypes.ELEMENT_NODE),
@@ -3952,15 +3966,15 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
     Utilities.isDocumentTypeNode = Utilities.isNodeOfType(NodeTypes.DOCUMENT_TYPE_NODE),
     Utilities.isDocumentFragmentNode = Utilities.isNodeOfType(NodeTypes.DOCUMENT_FRAGMENT_NODE),
 
-    Utilities.assertIsElementNode = Utilities.assertNodeOfType(NodeTypes.ELEMENT_NODE),
-    Utilities.assertIsAttributeNode = Utilities.assertNodeOfType(NodeTypes.ATTRIBUTE_NODE),
-    Utilities.assertIsTextNode = Utilities.assertNodeOfType(NodeTypes.TEXT_NODE),
-    Utilities.assertIsCDATASectionNode = Utilities.assertNodeOfType(NodeTypes.CDATA_SECTION_NODE),
-    Utilities.assertIsProcessingInstructionNode = Utilities.assertNodeOfType(NodeTypes.PROCESSING_INSTRUCTION_NODE),
-    Utilities.assertIsCommentNode = Utilities.assertNodeOfType(NodeTypes.COMMENT_NODE),
-    Utilities.assertIsDocumentNode = Utilities.assertNodeOfType(NodeTypes.DOCUMENT_NODE),
-    Utilities.assertIsDocumentTypeNode = Utilities.assertNodeOfType(NodeTypes.DOCUMENT_TYPE_NODE),
-    Utilities.assertIsDocumentFragmentNode = Utilities.assertNodeOfType(NodeTypes.DOCUMENT_FRAGMENT_NODE),
+    Utilities.assertIsElementNode = Utilities.assertIsNodeOfType(NodeTypes.ELEMENT_NODE),
+    Utilities.assertIsAttributeNode = Utilities.assertIsNodeOfType(NodeTypes.ATTRIBUTE_NODE),
+    Utilities.assertIsTextNode = Utilities.assertIsNodeOfType(NodeTypes.TEXT_NODE),
+    Utilities.assertIsCDATASectionNode = Utilities.assertIsNodeOfType(NodeTypes.CDATA_SECTION_NODE),
+    Utilities.assertIsProcessingInstructionNode = Utilities.assertIsNodeOfType(NodeTypes.PROCESSING_INSTRUCTION_NODE),
+    Utilities.assertIsCommentNode = Utilities.assertIsNodeOfType(NodeTypes.COMMENT_NODE),
+    Utilities.assertIsDocumentNode = Utilities.assertIsNodeOfType(NodeTypes.DOCUMENT_NODE),
+    Utilities.assertIsDocumentTypeNode = Utilities.assertIsNodeOfType(NodeTypes.DOCUMENT_TYPE_NODE),
+    Utilities.assertIsDocumentFragmentNode = Utilities.assertIsNodeOfType(NodeTypes.DOCUMENT_FRAGMENT_NODE),
 
     Utilities.splitQName = function (qn) {
         var i = qn.indexOf(":");
@@ -4958,7 +4972,19 @@ var xpath = (typeof exports === 'undefined') ? {} : exports;
             isCommentNode: Utilities.isCommentNode,
             isDocumentNode: Utilities.isDocumentNode,
             isDocumentTypeNode: Utilities.isDocumentTypeNode,
-            isDocumentFragmentNode: Utilities.isDocumentFragmentNode
+            isDocumentFragmentNode: Utilities.isDocumentFragmentNode,
+
+            assertIsNodeLike: Utilities.assertIsNodeLike,
+            assertIsArrayOfNodes: Utilities.assertIsArrayOfNodes,
+            assertIsElementNode: Utilities.assertIsElementNode,
+            assertIsAttributeNode: Utilities.assertIsAttributeNode,
+            assertIsTextNode: Utilities.assertIsTextNode,
+            assertIsCDATASectionNode: Utilities.assertIsCDATASectionNode,
+            assertIsProcessingInstructionNode: Utilities.assertIsProcessingInstructionNode,
+            assertIsCommentNode: Utilities.assertIsCommentNode,
+            assertIsDocumentNode: Utilities.assertIsDocumentNode,
+            assertIsDocumentTypeNode: Utilities.assertIsDocumentTypeNode,
+            assertIsDocumentFragmentNode: Utilities.assertIsDocumentFragmentNode
         }
     );
     // end non-node wrapper
